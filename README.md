@@ -1,4 +1,4 @@
-# HavenOnDemand library for Windows Universal 8.1. V2.0
+# HavenOnDemand library for ASP.NET V1.0
 
 ----
 ## Overview
@@ -13,7 +13,7 @@ HODResponseParser package for parsing JSON responses from HavenOnDemand APIs. To
 HODClient library support the .NET 4.5 and above.
 
 ----
-## Integrate HODClient into a Windows/Windows Phone project
+## Integrate HODClient into an ASP.NET project
 1. Right click on the project's References folder and select "Manage Nuget Packages...".
 >![](/images/managenuget.jpg)
 
@@ -52,12 +52,11 @@ HODClient library support the .NET 4.5 and above.
 
 >If your server are behind a firewall, provide the proxy when creating the HODClient instance
 >E.g.:
-   
-   MyProxy myProxy = new MyProxy(new Uri("proxyaddress:port"));
-   // if require login credentials
-   myProxy.Credentials = new System.Net.NetworkCredential("username", "password", "domain");
-
-   HODClient hodClient = new HODClient("your-api-key", myProxy);
+```   
+MyProxy myProxy = new MyProxy(new Uri("proxyaddress:port"));
+// if require login credentials
+myProxy.Credentials = new System.Net.NetworkCredential("username", "password", "domain");
+HODClient hodClient = new HODClient("your-api-key", myProxy);
 
 ----
 **Function GetRequest**
@@ -131,13 +130,13 @@ await hodClient.GetRequest(Params, hodApp, HODClient.REQ_MODE.SYNC);
 
 > Note:
 
-> 1. In the case of the "file" parameter, the value must be a Dictionary<string,object> object, where string will be the filename and object is the file InputStream.
+> In the case of the "file" parameter, the value must be a Dictionary<string,object> object, where string will be the filename and object is the file InputStream.
 > E.g.:
 
     Dictionary<string, object> file = new Dictionary<string, object>();
     file.Add(File1.PostedFile.FileName, File1.PostedFile.InputStream);
     
-> 2. For a parameter with its type is an array<>, the parameter must be defined in a List\<object\>.
+> For a parameter with its type is an array<>, the parameter must be defined in a List\<object\>.
 > E.g.:
 
     var entity_type = new List<object>();
