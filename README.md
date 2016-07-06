@@ -20,7 +20,7 @@ HODClient library support the .NET 4.5 and above.
 2. Select Browse and choose nuget.org for Package source then type in the search field "HavenOnDemand"
 >![](/images/installhodnuget.jpg)
 
-3. Select a package and click Install.
+3. Select a package support ASP.NET and click Install.
 
 ----
 ## HODClient API References
@@ -193,14 +193,9 @@ async Task GetJobResult(String jobID)
 ```
 void hodClient_requestCompletedWithJobID(string response)
 {
-    JsonValue root;
-    JsonObject jsonObject;
-    if (JsonValue.TryParse(response, out root))
-    {
-        jsonObject = root.GetObject();
-        string jobId = jsonObject.GetNamedString("jobID");
-        hodClient.GetJobResult(jobId);
-    }
+    string jobID = parser.ParseJobID(response);
+    if (jobID.Length > 0)
+        await hodClient.GetJobResult(jobID);
 }
 ```
 
@@ -218,18 +213,13 @@ async Task GetJobStatus(String jobID)
 * Response will be returned via the requestCompletedWithContent(String response)
 
 *Example code:*
-    Parse a JSON string contained a jobID and call the function to get the actual content from Haven OnDemand server 
+    Parse a JSON string contained a jobID and call the function to get the status of a call from Haven OnDemand API 
 ```
 void hodClient_requestCompletedWithJobID(string response)
 {
-    JsonValue root;
-    JsonObject jsonObject;
-    if (JsonValue.TryParse(response, out root))
-    {
-        jsonObject = root.GetObject();
-        string jobId = jsonObject.GetNamedString("jobID");
-        hodClient.GetJobStatus(jobId);
-    }
+    string jobID = parser.ParseJobID(response);
+    if (jobID.Length > 0)
+        await hodClient.GetJobStatus(jobID);
 }
 
 private void HodClient_requestCompletedWithContent(string response)
