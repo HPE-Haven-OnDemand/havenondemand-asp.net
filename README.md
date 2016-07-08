@@ -92,7 +92,7 @@ You can send requests to the API with either a GET or POST request, where POST r
 async Task GetRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode)
 ```
 
-* `Params' is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the name of parameters of that API. 
+* `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the name of parameters of that API. 
 
 >Note: For a value with its type is an array<>, the value must be defined in a List\<object\>. 
 ```
@@ -105,6 +105,7 @@ var Params = new Dictionary<string, object>()
     {"entity_type", entity_type }
 };
 ```
+
 * `hodApp` a string to identify a Haven OnDemand API. E.g. "extractentities". Current supported apps are listed in the HODApps class.
 * `mode` [REQ_MODE.ASYNC | REQ_MODE.SYNC]: specifies API call as Asynchronous or Synchronous.
 
@@ -136,14 +137,13 @@ async Task PostRequest(Dictionary<String, Object> Params, String hodApp, REQ_MOD
 ```
 
 * `Params` a Dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the parameters of that API
-
+----
 > Note 1: If the key is the "file" parameter, the value must be a Dictionary<string,object> object, where string will be the filename and object is the file InputStream.
 ```
 Dictionary<string, object> file = new Dictionary<string, object>();
 file.Add(File1.PostedFile.FileName, File1.PostedFile.InputStream);
-
 ```
-
+----
 > Note 2: For a value with its type is an array<>, the value must be defined in a List\<object\>. 
 ```
 var entity_type = new List<object>();
@@ -158,11 +158,10 @@ var Params = new Dictionary<string, object>()
 
 await client.PostRequest(Params, HODApps.ENTITY_EXTRACTION, HODClient.REQ_MODE.SYNC);
 ```
-
+----
 * `hodApp` a string to identify a Haven OnDemand API. E.g. "ocrdocument". Current supported apps are listed in the HODApps class.
 
 * `mode` [REQ_MODE.SYNC | REQ_MODE.ASYNC]: specifies API call as Asynchronous or Synchronous.
-
 
 *Example code:*
 
