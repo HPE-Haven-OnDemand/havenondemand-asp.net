@@ -92,7 +92,7 @@ You can send requests to the API with either a GET or POST request, where POST r
 async Task GetRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode)
 ```
 
-* `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the names of parameters of that API. 
+* `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the key is the name of a parameter of that API. 
 
 >Note: For a value with its type is an array<>, the value must be defined in a List\<object\>. 
 ```
@@ -135,9 +135,9 @@ await client.GetRequest(Params, hodApp, HODClient.REQ_MODE.SYNC);
 ```
 async Task PostRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode)
 ```
-* `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the names of parameters of that API.
+* `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the key is the name of a parameter of that API.
 
-> Note 1: If the key is the "file" parameter, the value must be a Dictionary<string,object> object, where string will be the filename and object is the file InputStream.
+> Note 1: If the key is the "file" parameter, the value must be a Dictionary<String, Object> object, where the key will be the filename and value is the file InputStream.
 ```
 Dictionary<string, object> file = new Dictionary<string, object>();
 file.Add(File1.PostedFile.FileName, File1.PostedFile.InputStream);
