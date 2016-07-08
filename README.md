@@ -92,7 +92,7 @@ You can send requests to the API with either a GET or POST request, where POST r
 async Task GetRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode)
 ```
 
-* `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the name of parameters of that API. 
+* `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the names of parameters of that API. 
 
 >Note: For a value with its type is an array<>, the value must be defined in a List\<object\>. 
 ```
@@ -135,7 +135,7 @@ await client.GetRequest(Params, hodApp, HODClient.REQ_MODE.SYNC);
 ```
 async Task PostRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode)
 ```
-* `Params` a Dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the parameters of that API
+* `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the names of parameters of that API.
 
 > Note 1: If the key is the "file" parameter, the value must be a Dictionary<string,object> object, where string will be the filename and object is the file InputStream.
 ```
@@ -197,7 +197,7 @@ void client_requestCompletedWithJobID(string response)
 ```
 async Task GetJobStatus(String jobID)
 ```
-* `jobID1 the job ID returned from an Haven OnDemand API upon an asynchronous call.
+* `jobID` the job ID returned from an Haven OnDemand API upon an asynchronous call.
 
 *Example code:*
 
@@ -214,7 +214,6 @@ void client_requestCompletedWithJobID(string response)
 ## Using HODResponseParser package
 ```
 using HOD.Response.Parser;
-
 HODResponseParser parser = new HODResponseParser();
 ```
 
@@ -243,7 +242,7 @@ void client_requestCompletedWithJobID(string response)
 
 ```
 // 
-void hodClient_requestCompletedWithContent(string response)
+void client_requestCompletedWithContent(string response)
 {
     OCRDocumentResponse resp = parser.ParseOCRDocumentResponse(ref response);
     if (resp != null)
@@ -270,7 +269,7 @@ void hodClient_requestCompletedWithContent(string response)
             }
             else if (err.error == HODErrorCode.IN_PROGRESS)
             {
-                // Task is In Progress. Let's wait for some time then call GetJobStatus() gain
+                // Task is In Progress. Let's wait for some time then call GetJobStatus() again
                 await client.GetJobStatus(err.jobID);
                 break;
             }
@@ -281,7 +280,7 @@ void hodClient_requestCompletedWithContent(string response)
                 text += err.detail + "<br/>";
 		Response.Write(text);
             }
-	}
+        }
     }
 }
 ```
@@ -362,20 +361,18 @@ void client_requestCompletedWithContent(string response)
                 text += err.detail + "<br/>";
 		Response.Write(text);
             }
-	}
+        }
     }
 }
 ```
 
 ---
-## Example: Example\SpeechRecognition Demo: 
+## Example\SpeechRecognition Demo: 
+How to post a file and call the Speech Recognition API to extract text from speech from a media file. If the checkbox "Call Entity Extraction on result" is set, call the Entity Extraction API to extract people and places and companies_eng from the recognized text.
 
-**How to post a file and call the Speech Recognition API to extract text from speech from a media file. If the checkbox "Call Entity Extraction on result" is set, call the Entity Extraction API to extract people and places and companies_eng from the recognized text**
 
-
-## Example: Example\SentimentAnalysis Demo:
- 
-**How to post multiple files and call the Sentiment Analysis API to analyze sentimental statements from files of input text**
+## Example\SentimentAnalysis Demo:
+How to post multiple files and call the Sentiment Analysis API to analyze sentimental statements from files of input text.
 
 
 ## License
