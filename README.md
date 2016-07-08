@@ -1,4 +1,4 @@
-# ASP.NET (C#) client library for Haven OnDemand V1.0
+# ASP.NET (C#) client library for Haven OnDemand.
 
 Official ASP.NET client library to help with calling [Haven OnDemand APIs](http://havenondemand.com).
 
@@ -16,14 +16,13 @@ Haven OnDemand is a set of over 70 APIs for handling all sorts of unstructured d
 * Machine learning
 
 For a full list of all the APIs and to try them out, check out https://www.havenondemand.com/developer/apis
-----
 
 ## Overview
 The library contains 2 packages:
 
 HODClient package for sending HTTP GET/POST requests to Haven OnDemand APIs.
 
-HODResponseParser package for parsing JSON responses from Haven OnDemand APIs. To use the HODResponseParser, you will need to also add the NewtonSoft.json dll for .NET.
+HODResponseParser package for parsing JSON responses from Haven OnDemand APIs. To use the HODResponseParser, you will need the NewtonSoft.json dll for .NET.
 
 HODClient library supports the .NET 4.5 and above.
 
@@ -41,8 +40,7 @@ HODClient library supports the .NET 4.5 and above.
 ## Using HODClient package
 ```
 using HOD.Client;
-
-HODClient client = new HODClient("your-api-key", "v1");
+HODClient client = new HODClient("API_KEY", "v1");
 ```
 where you replace "API_KEY" with your API key found [here](https://www.havenondemand.com/account/api-keys.html). `version` is an *optional* parameter which can be either `"v1"` or `"v2"`, but defaults to `"v1"` if not specified.
 
@@ -86,33 +84,29 @@ private void HodClient_onErrorOccurred(string errorMessage)
 }
 ```
 
-## Sending requests to the API - POST and GET
-You can send requests to the API with either a POST or GET request, where POST requests are required for uploading files and recommended for larger size queries and GET requests are recommended for smaller size queries.
+## Sending requests to the API - GET and POST
+You can send requests to the API with either a GET or POST request, where POST requests are required for uploading files and recommended for larger size queries and GET requests are recommended for smaller size queries.
 
 ### Function GetRequest
 ```
 async Task GetRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode)
 ```
 
-* `Params' a Dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the parameters of that API. 
+* `Params' is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the keys are the name of parameters of that API. 
 
 >Note: For a value with its type is an array<>, the value must be defined in a List\<object\>. 
 ```
 var entity_type = new List<object>();
 entity_type.Add("people_eng");
 entity_type.Add("places_eng");
-    
 var Params = new Dictionary<string, object>()
 {
     {"url", "http://www.cnn.com" },
     {"entity_type", entity_type }
 };
 ```
-
 * `hodApp` a string to identify a Haven OnDemand API. E.g. "extractentities". Current supported apps are listed in the HODApps class.
-
 * `mode` [REQ_MODE.ASYNC | REQ_MODE.SYNC]: specifies API call as Asynchronous or Synchronous.
-
 
 *Example code:*
 ```
