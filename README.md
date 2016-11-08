@@ -83,13 +83,29 @@ private void HodClient_onErrorOccurred(string errorMessage)
     
 }
 ```
+----
+If you want to change the API version without the need to recreate the instance of the HOD client.
+```
+SetAPIVersion(String version)
+```
+* `version` a string to specify a new API version as "v1" or "v2"
+
+If you want to change the API_KEY without the need to recreate the instance of the HOD client.
+```
+SetAPIKey(String apiKey)
+```
+* `apiKey` a string to specify a new API_KEY
+
+----
 
 ## Sending requests to the API - GET and POST
 You can send requests to the API with either a GET or POST request, where POST requests are required for uploading files and recommended for larger size queries and GET requests are recommended for smaller size queries.
 
 ### Function GetRequest
 ```
-async Task GetRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode)
+async Task GetRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode = REQ_MODE.ASYNC, String version = "")
+OR
+async Task<String> GetRequestSync(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode = REQ_MODE.ASYNC, String version = "")
 ```
 
 * `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the key is the name of a parameter of that API. 
@@ -107,7 +123,8 @@ var Params = new Dictionary<string, object>()
 ```
 
 * `hodApp` a string to identify a Haven OnDemand API. E.g. "extractentities". Current supported apps are listed in the HODApps class.
-* `mode` [REQ_MODE.ASYNC | REQ_MODE.SYNC]: specifies API call as Asynchronous or Synchronous.
+* `mode` [REQ_MODE.ASYNC | REQ_MODE.SYNC]: specifies API call as Asynchronous or Synchronous. Default to REQ_MODE.ASYNC.
+* `version` is a string to specify an API version. Can be omitted or an empty string.
 
 *Example code:*
 ```
@@ -129,11 +146,15 @@ var Params = new Dictionary<string, object>()
 };
 
 await client.GetRequest(Params, hodApp, HODClient.REQ_MODE.SYNC);
+// OR
+var response = client.GetRequest(Params, hodApp, HODClient.REQ_MODE.SYNC);
 ```
 
 ### Function PostRequest
 ```
-async Task PostRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode)
+async Task<String> PostRequestSync(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode = REQ_MODE.ASYNC, String version="")
+OR
+async Task PostRequest(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode = REQ_MODE.ASYNC, string version="")
 ```
 * `Params` is a dictionary object containing key/value pair parameters to be sent to a Haven OnDemand API, where the key is the name of a parameter of that API.
 
@@ -157,8 +178,8 @@ await client.PostRequest(Params, HODApps.ENTITY_EXTRACTION, HODClient.REQ_MODE.S
 ```
 
 * `hodApp` a string to identify a Haven OnDemand API. E.g. "ocrdocument". Current supported apps are listed in the HODApps class.
-
-* `mode` [REQ_MODE.SYNC | REQ_MODE.ASYNC]: specifies API call as Asynchronous or Synchronous.
+* `mode` [REQ_MODE.SYNC | REQ_MODE.ASYNC]: specifies API call as Asynchronous or Synchronous. Default to REQ_MODE.ASYNC.
+* `version` is a string to specify an API version. Can be omitted or an empty string.
 
 *Example code:*
 
@@ -173,7 +194,55 @@ var Params =  new Dictionary<String,Object>
     {"mode", "document_photo"}
 };
 await client.PostRequest(Params, hodApp, HODClient.REQ_MODE.ASYNC);
+
+// OR 
+
+var response = client.PostRequest(Params, hodApp, HODClient.REQ_MODE.ASYNC);
 ```
+----
+
+**Function GetRequestCombination**
+
+    async Task GetRequestCombination(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode = REQ_MODE.ASYNC)
+
+*Description:* 
+* Sends a HTTP GET request for Haven OnDemand combination API.
+
+*Parameters:*
+* Params: a Dictionary object containing key/value pair parameters to be sent to a combination API, where the keys are the parameters of that API
+* hodApp: is the name of the combination API you are calling.
+* mode [REQ_MODE.SYNC | REQ_MODE.ASYNC]: specifies API call as Asynchronous or Synchronous. Default to REQ_MODE.ASYNC.
+
+*Response:*
+* If the mode is "ASYNC", response will be returned via the requestCompletedWithJobID(String response) callback function.
+* If the mode is "SYNC", response will be returned via the requestCompletedWithContent(String response) callback function.
+* If there is an error occurred, the error message will be sent via the onErrorOccurred(String errorMessage) callback function.
+
+----
+
+**Function PostRequestCombination**
+
+    async Task PostRequestCombination(Dictionary<String, Object> Params, String hodApp, REQ_MODE mode = REQ_MODE.ASYNC)
+
+*Description:* 
+* Sends a HTTP POST request for Haven OnDemand combination API.
+
+*Parameters:*
+* Params: a Dictionary object containing key/value pair parameters to be sent to a combination API, where the keys are the parameters of that API
+
+> Note:
+
+> 1. File upload is not yet supported in this version
+
+* hodApp: is the name of the combination API you are calling.
+* mode [REQ_MODE.SYNC | REQ_MODE.ASYNC]: specifies API call as Asynchronous or Synchronous. Default to REQ_MODE.ASYNC.
+
+*Response:*
+* If the mode is "ASYNC", response will be returned via the requestCompletedWithJobID(String response) callback function.
+* If the mode is "SYNC", response will be returned via the requestCompletedWithContent(String response) callback function.
+* If there is an error occurred, the error message will be sent via the onErrorOccurred(String errorMessage) callback function.
+
+----
 
 ### Function GetJobResult
 ```
