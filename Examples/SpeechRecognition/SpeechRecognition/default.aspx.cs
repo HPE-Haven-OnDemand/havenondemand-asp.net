@@ -12,45 +12,6 @@ using System.Web.UI.WebControls;
 
 namespace SpeechRecognition
 {
-    public class EntityAdditionalInformation
-    {
-        public List<string> person_profession { get; set; }
-        public string person_date_of_birth { get; set; }
-        public long wikidata_id { get; set; }
-        public string wikipedia_eng { get; set; }
-        public string image { get; set; }
-        public string person_date_of_death { get; set; }
-        public double lon { get; set; }
-        public double lat { get; set; }
-        public long place_population { get; set; }
-        public string place_country_code { get; set; }
-        public string place_region1 { get; set; }
-        public string place_region2 { get; set; }
-        public string url_homepage { get; set; }
-        public double place_elevation { get; set; } 
-        public string place_type { get; set; }
-        public string place_continent { get; set; }
-    }
-
-    public class Entity
-    {
-        public string normalized_text { get; set; }
-        public string original_text { get; set; }
-        public string type { get; set; }
-        public long normalized_length { get; set; }
-        public long original_length { get; set; }
-        public double score { get; set; }
-        public string normalized_date { get; set; }
-        public EntityAdditionalInformation additional_information { get; set; }
-        public List<object> components { get; set; }
-        public int documentIndex { get; set; }
-    }
-
-    public class EntityExtractionResponse
-    {
-        public List<Entity> entities { get; set; }
-    }
-
     public partial class _default : System.Web.UI.Page
     {
         HODClient client = null;
@@ -86,7 +47,7 @@ namespace SpeechRecognition
                     queryMap.Add("interval", -1);
                     queryMap.Add("language", speechlanguage.SelectedValue);
                     hodApp = HODApps.RECOGNIZE_SPEECH;
-                    await client.PostRequest(queryMap, hodApp, HODClient.REQ_MODE.ASYNC);
+                    await client.PostRequest(queryMap, hodApp, true);
                 }
                 catch (Exception ex)
                 {
@@ -110,7 +71,7 @@ namespace SpeechRecognition
             queryMap.Add("entity_type", entities);
             queryMap.Add("unique_entities", true);
             hodApp = HODApps.ENTITY_EXTRACTION;
-            await client.PostRequest(queryMap, hodApp, HODClient.REQ_MODE.SYNC);
+            await client.PostRequest(queryMap, hodApp, false);
         }
 
         private void Client_requestCompletedWithJobID(string response)
@@ -185,7 +146,7 @@ namespace SpeechRecognition
             }
             else if (hodApp == HODApps.ENTITY_EXTRACTION)
             {
-                var resp = (EntityExtractionResponse)parser.ParseCustomResponse<EntityExtractionResponse>(ref response);
+                EntityExtractionResponse resp = parser.ParseEntityExtractionResponse(ref response);
                 if (resp != null)
                 {
                     string text = textResponse + "<br/><br/><div>";

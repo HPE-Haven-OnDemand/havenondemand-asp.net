@@ -43,12 +43,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HODClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HODClient.1.0.0.0\lib\net45\HODClient.dll</HintPath>
+    <Reference Include="HODClient, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HODClient.1.0.2.0\lib\net45\HODClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="HODResponseParser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HODResponseParser.1.0.0.0\lib\net45\HODResponseParser.dll</HintPath>
+    <Reference Include="HODResponseParser, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HODResponseParser.1.0.2.0\lib\net45\HODResponseParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

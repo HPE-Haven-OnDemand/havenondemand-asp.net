@@ -43,14 +43,14 @@ namespace SentimentAnalysis
                 Dictionary<string, object> queryMap = new Dictionary<string, object>();
                 queryMap.Add("file", files);
                 queryMap.Add("language", textlanguage.SelectedValue);
-                await client.PostRequest(queryMap, hodApp, HODClient.REQ_MODE.SYNC);
+                await client.PostRequest(queryMap, hodApp, false);
             }
             else if (inputtext.Value.Length > 0)
             {
                 Dictionary<string, object> queryMap = new Dictionary<string, object>();
                 queryMap.Add("text", inputtext.Value);
                 queryMap.Add("language", textlanguage.SelectedValue);
-                await client.GetRequest(queryMap, hodApp, HODClient.REQ_MODE.SYNC);
+                await client.GetRequest(queryMap, hodApp, false);
             }
         }
         
