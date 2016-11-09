@@ -83,7 +83,7 @@ private void HodClient_onErrorOccurred(string errorMessage)
     
 }
 ```
-----
+
 If you want to change the API version without the need to recreate the instance of the HOD client.
 ```
 SetAPIVersion(String version)
@@ -95,8 +95,6 @@ If you want to change the API_KEY without the need to recreate the instance of t
 SetAPIKey(String apiKey)
 ```
 * `apiKey` a string to specify a new API_KEY
-
-----
 
 ## Sending requests to the API - GET and POST
 You can send requests to the API with either a GET or POST request, where POST requests are required for uploading files and recommended for larger size queries and GET requests are recommended for smaller size queries.
@@ -163,7 +161,7 @@ async Task PostRequest(Dictionary<String, Object> Params, String hodApp, Boolean
 Dictionary<string, object> file = new Dictionary<string, object>();
 file.Add(File1.PostedFile.FileName, File1.PostedFile.InputStream);
 ```
-----
+
 > Note 2: For a value with its type is an array<>, the value must be defined in a List\<object\>. 
 ```
 var entity_type = new List<object>();
@@ -197,29 +195,24 @@ await client.PostRequest(Params, hodApp, true);
 // OR 
 var response = client.PostRequest(Params, hodApp, true);
 ```
-----
 
-**Function GetRequestCombination**
+### Function GetRequestCombination
 
-    async Task GetRequestCombination(Dictionary<String, Object> Params, String hodApp, Boolean async = true)
-
-*Description:* 
-* Sends a HTTP GET request for Haven OnDemand combination API.
-
+Sends a HTTP GET request for Haven OnDemand combination API.
+```
+async Task GetRequestCombination(Dictionary<String, Object> Params, String hodApp, Boolean async = true)
+```
 *Parameters:*
 * `Params` is a Dictionary object containing key/value pair parameters to be sent to a combination API, where the keys are the parameters of that API
 * `hodApp` is the name of the combination API you are calling.
 * `async` [true | false] specifies API call as Asynchronous or Synchronous. Default to true.
 
-----
+### Function PostRequestCombination
 
-**Function PostRequestCombination**
-
-    async Task PostRequestCombination(Dictionary<String, Object> Params, String hodApp, Boolean async = true)
-
-*Description:* 
-* Sends a HTTP POST request for Haven OnDemand combination API.
-
+Sends a HTTP POST request for Haven OnDemand combination API.
+```
+async Task PostRequestCombination(Dictionary<String, Object> Params, String hodApp, Boolean async = true)
+```
 *Parameters:*
 * `Params` is a Dictionary object containing key/value pair parameters to be sent to a combination API, where the keys are the parameters of that API
 
@@ -229,8 +222,6 @@ var response = client.PostRequest(Params, hodApp, true);
 
 * `hodApp` is the name of the combination API you are calling.
 * `async` [true | false]: specifies API call as Asynchronous or Synchronous. Default to true.
-
-----
 
 ### Function GetJobResult
 ```
@@ -294,6 +285,8 @@ void client_requestCompletedWithJobID(string response)
 ```
 
 ## Parse Haven OnDemand APIs' response
+
+Parses a json string and returns a class object.
 
 *Example code:*
 
